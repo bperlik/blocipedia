@@ -2,7 +2,7 @@
 
 Blocipedia is a Ruby on Rails application that allows users to create wikis and collaborate on other wikis. Users can pay to upgrade their membership, allowing them to create private wikis and select collaborators.
 
-The app is deployed on Heroku:
+The app is deployed on Heroku: https://still-scrubland-29572.herokuapp.com
 
 The source code is here on GitHub: https://github.com/bperlik/Blocipedia
 

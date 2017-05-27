@@ -14,4 +14,15 @@
  *= require_self
  */
 
+@import "bootstrap-sprockets";
 @import "bootstrap";
+
+.user-info {
+  margin-top: 10px;
+  padding: 10px;
+
+}
+
+nav{
+  margin-top: 5px;
+}
