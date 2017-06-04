@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Wiki, type: :model do
-  let(:my_user) { create(:user) }
-  let(:my_wiki) { create(:wiki, user: my_user) }
-
-  it {should belong_to(:user) }
+  let(:wiki) { Wiki.create!(title: "New Wiki Title", body: "New Wiki Body", private: false) }
 
   describe "attributes" do
     it "responds to title" do
