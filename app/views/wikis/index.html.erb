@@ -8,7 +8,9 @@
       <% end %>
     </ul>
   </div>
-  <div class="col-md-4">
-    <%= link_to "Create a new Wiki", new_wiki_path, class: 'btn btn-primary' %>
-  </div>
+  <% if user_is_authorized_to_create? %>
+    <div class="col-md-4">
+      <%= link_to "Create a new Wiki", new_wiki_path, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
 </div>
