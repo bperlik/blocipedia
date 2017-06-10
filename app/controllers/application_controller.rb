@@ -4,10 +4,12 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery with: :exception
 
- # How to handle various errors
+  before_action :authenticate_user!
+
+ # Handle various errors
   rescue_from ActiveRecord::RecordNotFound, with: :handle_error
 
-  # How to handle user doing unauthorized actions
+  # Handle user doing unauthorized actions
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def resource_name

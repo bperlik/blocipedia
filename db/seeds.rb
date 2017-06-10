@@ -3,13 +3,19 @@
 #
 require 'random_data'
 
-# Create a user
-1.times do
-  User.create!(
-    email: 'testing@testing.com',
-    password: 'testing'
+# Create an admin user
+  admin = User.create!(
+    email: 'admin@test.com',
+    password: 'nonono',
+    role: 'admin'
   )
-end
+
+# Create a standard user
+  standard = User.create!(
+    email: 'standard@test.com',
+    password: 'nonono',
+    role: 'standard'
+ )
 
 # Create wikis
 50.times do
