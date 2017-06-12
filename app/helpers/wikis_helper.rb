@@ -1,6 +1,5 @@
 module WikisHelper
   def user_is_authorized_to_view?
-    current_user
   end
 
   def user_is_authorized_to_create?
