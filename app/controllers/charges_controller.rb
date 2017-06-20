@@ -19,7 +19,7 @@ class ChargesController < ApplicationController
    )
 
     # upgrade role to premium
-    current_user.role = "premium"
+    current_user.premium!
 
     flash[:notice] = "Thanks, #{current_user.email}! As a #{current_user.role} member, now you can make private wikis."
     redirect_to root_path

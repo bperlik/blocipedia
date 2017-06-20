@@ -6,6 +6,10 @@ class WikiPolicy < ApplicationPolicy
     @wiki = wiki
   end
 
+  def show?    # private admin or self should see all wikis
+    user.present? && (!wiki.private || user.admin? || wiki.user_id == user.id)
+  end
+
   def create?
     user.present?
   end
@@ -23,6 +27,6 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.admin?
+    user.role == 'admin' || wiki.user == user?
   end
 end

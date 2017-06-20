@@ -7,4 +7,8 @@ class User < ActiveRecord::Base
   has_many :wikis
   before_save { self.role ||= :standard }
   enum role: [:standard, :premium, :admin]
+
+  def go_public
+    self.wikis.each { |wiki| puts wiki.make_public }
+  end
 end

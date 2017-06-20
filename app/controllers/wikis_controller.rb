@@ -1,13 +1,16 @@
 class WikisController < ApplicationController
 
-  skip_before_filter :authenticate_user!, only: [:index, :show]
-
   def index
-    @wikis = Wiki.all
+    @wikis= Wiki.visible(current_user)
   end
 
   def show
     @wiki = Wiki.find(params[:id])
+    unless @wiki.private == false || current_user.id == @wiki.user_id || current_user.premium? || current_user.admin?
+      flash[:alert] = "You do not have the permission to see this private wiki."
+      redirect_to root_path
+    end
+    authorize @wiki
   end
 
   def new
@@ -25,6 +28,7 @@ class WikisController < ApplicationController
       flash.now[:alert] = "An error occurred whilst saving the wiki.  Please try again."
       render :new
     end
+    authorize @wiki
   end
 
   def edit
@@ -39,7 +43,7 @@ class WikisController < ApplicationController
       flash[:notice] = "Wiki was updated sucessfully"
       redirect_to @wiki
     else
-      flash[:notice] = "There was an error updating a wiki. Please try again" 
+      flash[:notice] = "There was an error updating this wiki. Please try again"
       render "edit"
     end
   end
@@ -51,7 +55,7 @@ class WikisController < ApplicationController
       flash[:notice] = "Wiki was deleted successfully"
       redirect_to wikis_path
     else
-      flash[:notice] = "There was an error deleting a wiki. Please try again"  
+      flash[:notice] = "There was an error deleting a wiki. Please try again"
       render "show"
     end
   end
