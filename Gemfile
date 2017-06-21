@@ -25,6 +25,7 @@ ruby "2.3.4"
  gem 'devise'
  gem 'pundit'
  gem 'stripe'
+ gem 'redcarpet'
 
  group :development, :test do
    gem 'byebug'

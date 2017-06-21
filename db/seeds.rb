@@ -42,6 +42,33 @@ private_wiki = Wiki.create(
     private: true,
     user: users.last
 )
+
+markdn_wiki = Wiki.create(
+  title: "My Markdown Wiki Example",
+  private: false,
+  user: users.sample,
+  body:
+  %Q{#My Markdown Wiki Body H1 here#
+##Markdown CheatSheet H2 here##
+###Testing the markdown renderer H3 here###
+
+  *italic*
+  **bold**
+
+1. First ordered list item
+2. Another item
+3. Another number
+4. And another item
+
+* Unordered list can use asterisks
+* another item in list
+
+⋅⋅⋅To have a line break without a paragraph, use two trailing spaces.⋅⋅
+
+  ```A code block.```
+  }
+)
+
 wikis = Wiki.all
 
 puts "Seed finished"

@@ -4,7 +4,7 @@
   <div class="col-md-8">
     <ul class="list-unstyled">
       <% @wikis.each do |wiki| %>
-        <li><%= link_to wiki.title, wiki_path(wiki) %></li>
+        <li><%= link_to markdown(wiki.title), wiki_path(wiki) %></li>
       <% end %>
     </ul>
   </div>
