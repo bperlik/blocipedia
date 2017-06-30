@@ -1,35 +1,62 @@
 <% if user_is_authorized_to_update? %>
-<h1>Edit Wiki</h1>
+  <h1>Edit Wiki</h1>
 
   <div class="row">
-    <div class="col-md-4">
-       <p>Wiki rules</p>
-         <ul>
-           <li>Don't be mean or nasty.</li>
-            <li>Make a wiki anyone can edit!</li>
-         </ul>
+
+    <div class="col-md-6">
+      <h3>Wiki rules</h3>
+      <ul>
+        <li>Be truthful.</li>
+        <li>Don't be mean or nasty.</li>
+        <li>Excessive user of hashtags will get you banned!</li>
+      </ul>
+
+      <h3><span class='main-text-highlight'>Markdown</span></h3>
+      <p>This editor uses Markdown, a markup language with plain text formatting syntax which is then converted to HTML
+      for viewing. For more information, refer to this <a href='http://daringfireball.net/projects/markdown/syntax'><strong> Markdown Syntax Guide</strong></a></p>
+
+      <% if @wiki.private == true && (current_user == @wiki.user || current_user.admin?) %>
+        <h3> Manage Collaborators </h3>
+        <br />
+        <%= link_to "Add Collaborator", new_wiki_collaborator_path(wiki_id: @wiki.id), class: 'btn btn-success' %>
+        <br />
+
+        <% if @wiki.collaborators.present? %>
+            <% @current_collaborators = @wiki.collaborators %>
+            <% wiki_id = @wiki.id %>
+            <% @current_collaborators.each do |collaborator| %>
+              <tr>
+                <td>
+                  <strong> <%= collaborator.user.email %> </strong>
+                  <%= button_to "Remove Collaborator", wiki_collaborator_path(@wiki.id, collaborator.id), method: :delete, class: 'btn btn-danger' %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+      <% end %>
     </div>
 
-    <div class="col-md-8">
-       <%= form_for @wiki do |f| %>
-       <div class="form-group">
+    <div class="col-md-6">
+      <%= form_for @wiki do |f| %>
+        <div class="form-group">
           <%= f.label :title %>
           <%= f.text_field :title, class: 'form-control', placeholder: "Enter wiki title" %>
-       </div>
-       <div class="form-group">
+        </div>
+        <div class="form-group">
           <%= f.label :body %>
           <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter wiki body" %>
-       </div>
-       <div class="form-group">
-         <%= f.submit "Save", class: 'btn btn-success' %>
-       </div>
-       <% if current_user.role == 'premium' || current_user.role == 'admin' %>
-         <div class="form-group">
-           <%= f.label :private, class: 'checkbox' do %>
-             <%= f.check_box :private %> Private Wiki
-           <% end %>
-         </div>
-       <% end %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "Save", class: 'btn btn-success' %>
+        </div>
+        <% if current_user.role == 'premium' || current_user.role == 'admin' %>
+          <div class="form-group">
+            <%= f.label :private, class: 'checkbox' do %>
+              <%= f.check_box :private %> Private Wiki
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>

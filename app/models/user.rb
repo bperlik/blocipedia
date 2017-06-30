@@ -5,10 +5,19 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :wikis
-  before_save { self.role ||= :standard }
+  has_many :collaborators, dependent: :destroy
+
   enum role: [:standard, :premium, :admin]
+  before_save { self.role ||= :standard }
+
+  after_update :go_public
 
   def go_public
-    self.wikis.each { |wiki| puts wiki.make_public }
+    if self.role == 'standard'
+      user_wikis = self.wikis.where(private: true)
+      user_wikis.each do |wiki|
+       wiki.update_attributes(private: false)
+      end
+    end
   end
 end

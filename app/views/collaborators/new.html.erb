@@ -1,0 +1,16 @@
+<h1>Add Collaborators</h1>
+<%= form_for [@wiki, @collaborator]  do |f| %>
+
+  <div class= 'form-group'>
+    <% @temp = @wiki.non_collaborators %>
+    <% @not_current_collaborators = @temp - @wiki.collaborators %>
+    <%= f.hidden_field :wiki_id, :value => params[:wiki_id] %>
+    <%= f.label "Select new collaborator", class: 'form-label' %>
+    <%= f.select 'user_id', options_from_collection_for_select(@not_current_collaborators, 'id', 'email') %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.submit "Save", class: 'btn btn-success' %>
+  </div>
+
+<% end %>

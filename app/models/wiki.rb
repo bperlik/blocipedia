@@ -1,13 +1,16 @@
 class Wiki < ActiveRecord::Base
 
   belongs_to :user
+  has_many :collaborators, dependent: :destroy
+  has_many :users, through: :collaborators
 
-  scope :visible, -> (user) do
-    return all if user && (user.premium? || user.admin?)
-    where(private: [false, nil])
-  end
+  validates :title, uniqueness: {case_sensitive: false },
+                                 length: { minimum: 2, maximum: 300 }
 
-  def make_public
-    update_attribute(:private, false)
+  scope :visible, -> (user) { user ? all : where(private: false) }
+
+
+  def non_collaborators
+    User.where.not(id: collaborators.pluck(:id))
   end
 end

@@ -10,6 +10,13 @@ require 'random_data'
     role: 'admin'
   )
 
+# Create a premium user
+  premium = User.premium!(
+    email: 'premium@test.com',
+    password: 'nonono',
+    role: 'premium'
+  )
+
 # Create a standard user
   standard = User.create!(
     email: 'standard@test.com',
