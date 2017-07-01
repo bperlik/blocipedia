@@ -9,8 +9,11 @@ class Wiki < ActiveRecord::Base
 
   scope :visible, -> (user) { user ? all : where(private: false) }
 
-
-  def non_collaborators
-    User.where.not(id: collaborators.pluck(:id))
+  def possible_collaborators
+    available = []
+    User.all.find_each do |user|
+      available << user unless users.include?(user)
+    end
+    available
   end
 end

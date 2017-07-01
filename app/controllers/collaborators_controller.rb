@@ -8,9 +8,9 @@ class CollaboratorsController < ApplicationController
 
   def create
     @wiki = Wiki.find(params[:wiki_id])
+
     @collaborator = Collaborator.new(collaborator_params)
     authorize @collaborator
-
     if @collaborator.save
       flash[:notice] = "#{@collaborator.user.email} was successfully added collaborator to your team."
       redirect_to @wiki
@@ -24,7 +24,7 @@ class CollaboratorsController < ApplicationController
     @wiki = Wiki.find(params[:wiki_id])
     @collaborator = Collaborator.find(params[:id])
     @user = @collaborator.user
-    authorize @collaborator
+
     if @collaborator.destroy
       flash[:notice] = "Collaborator #{@user.email} is no longer a collaborator on this wiki."
       redirect_to @wiki
